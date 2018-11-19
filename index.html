@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>CS171 - Final Project</title>
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+	<div class="container-fluid">
+
+		<h1>Boston Crime Data</h1>
+
+		<div class="container-grid">
+			<div class="row">
+				<div class="col">
+					<p>Here is some introductory text to our web page.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<!--Select box-->
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="var"><br></label>
+							<select class="form-control" id="var">
+								<option value="HeroinCrimes">Number of heroin crimes</option>
+								<option value="NumbNeedleReports">Number of needle pick-up requests</option>
+								<option value="WeedCrimes">Number of marijuana crimes</option>
+							</select>
+						</div>
+					</form>
+					<!--Line chart area-->
+					<div id="line-chart"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Load JS libraries: jQuery, bootstrap, D3 -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/d3.min.js"></script>
+	<script src="js/d3-tip.js"></script>
+
+		<!-- Our scripts -->
+	<script src="js/main.js"></script>
+	<script src="js/line-chart.js"></script>
+
+</body>
+</html>
