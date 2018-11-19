@@ -173,7 +173,7 @@ Linechart.prototype.updateVis = function() {
     vis.policyTipMARIJUANABALLOT.html("Recreational marijuana legalized via ballot measure");
 
     // Draw circles
-    vis.trendCircles = vis.svg.selectAll("trend-circle")
+    vis.trendCircles = vis.svg.selectAll("circle")
         .data(vis.data);
     vis.trendCircles.exit().remove();
     vis.trendCircles.enter()
