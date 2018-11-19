@@ -23,23 +23,35 @@ h1 {
     stroke-dasharray: 2;
 }
 
-.policy-text {
-    font-size: 10px;
-    text-align: center;
-}
-
-.circle {
+.trend-circle {
     fill: #288BE4;
 }
 
-.circle:hover {
+.trend-circle:hover {
     fill: #F84D42;
 }
 
-.d3-tip {
+.policy-circle {
+    fill: #F84D42;
+}
+
+.policy-circle:hover {
+    fill: white;
+    stroke: #091F2F;
+}
+
+.trend-tip {
     line-height: 1;
     padding: 12px;
     background: rgba(0, 0, 0, 0.8);
     color: white;
+    border-radius: 2px;
+}
+
+.policy-tip {
+    line-height: 1;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #F84D42;
     border-radius: 2px;
 }

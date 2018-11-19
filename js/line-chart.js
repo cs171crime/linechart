@@ -13,6 +13,9 @@ Linechart = function(_parentElement, _data) {
 	this.parentElement = _parentElement;
 	this.data = _data;
 	this.measure = "HeroinCrimes";
+	this.dateAHOPE = parseDate("10/2016");
+    this.dateBILL4056 = parseDate("03/2016");
+    this.dateMARIJUANABALLOT = parseDate("12/2016");
 
     this.initVis();
 };
@@ -62,13 +65,28 @@ Linechart.prototype.initVis = function() {
 	vis.policyTextAHOPE = vis.svg.append("text")
     vis.policyTextBILL4056 = vis.svg.append("text")
     vis.policyTextMARIJUANABALLOT = vis.svg.append("text")
-    vis.policyTextNEEDLEPICKUP = vis.svg.append("text")
+    vis.policyTextNEEDLEPICKUP = vis.svg.append("text") // need to add this to the plot
 
-    // Tooltip
-    vis.tip = d3.tip()
-        .attr('class', 'd3-tip')
+    // Tooltips
+    vis.trendTip = d3.tip()
+        .attr('class', 'trend-tip')
         .offset([-10, 0]);
-    vis.svg.call(vis.tip);
+    vis.svg.call(vis.trendTip);
+
+    vis.policyTipAHOPE = d3.tip()
+        .attr('class', 'policy-tip')
+        .offset([-10, 0]);
+    vis.svg.call(vis.policyTipAHOPE);
+
+    vis.policyTipBILL4056 = d3.tip()
+        .attr('class', 'policy-tip')
+        .offset([-10, 0]);
+    vis.svg.call(vis.policyTipBILL4056);
+
+    vis.policyTipMARIJUANABALLOT = d3.tip()
+        .attr('class', 'policy-tip')
+        .offset([-10, 0]);
+    vis.svg.call(vis.policyTipMARIJUANABALLOT);
 
     // call wrangleData
     vis.wrangleData();
@@ -124,53 +142,77 @@ Linechart.prototype.updateVis = function() {
 	// AHOPE - Oct 2016
     vis.policyPathAHOPE
 		.attr("class", "policy-line")
-		.attr("x1", vis.x(parseDate("10/2016")))
+		.attr("x1", vis.x(vis.dateAHOPE))
         .attr("y1", 0)
-        .attr("x2", vis.x(parseDate("10/2016")))
+        .attr("x2", vis.x(vis.dateAHOPE))
         .attr("y2", vis.height);
-	// vis.policyTextAHOPE
-	// 	.attr("class", "policy-text")
-    //     .attr("x", vis.x(parseDate("10/2016")))
-    //     .attr("y", 0)
-	// 	.text("AHOPE created")
-
 
     // Bill H.4056 (An Act relative to substance use, treatment, education and prevention) -- March 2016
     vis.policyPathBILL4056
         .attr("class", "policy-line")
-        .attr("x1", vis.x(parseDate("03/2016")))
+        .attr("x1", vis.x(vis.dateBILL4056))
         .attr("y1", 0)
-        .attr("x2", vis.x(parseDate("03/2016")))
+        .attr("x2", vis.x(vis.dateBILL4056))
         .attr("y2", vis.height);
 
     // Recreational marijuana - Dec 2016
     vis.policyPathMARIJUANABALLOT
         .attr("class", "policy-line")
-        .attr("x1", vis.x(parseDate("12/2016")))
+        .attr("x1", vis.x(vis.dateMARIJUANABALLOT))
         .attr("y1", 0)
-        .attr("x2", vis.x(parseDate("12/2016")))
+        .attr("x2", vis.x(vis.dateMARIJUANABALLOT))
         .attr("y2", vis.height);
 
     // Needle pickup
 
 
-    // Update tooltip
-    vis.tip.html(function(d) { return "<strong>" + formatDate(d.date) + "</strong>: " + d[vis.measure]; });
+    // Update tooltips
+    vis.trendTip.html(function(d) { return "<strong>" + formatDate(d.date) + "</strong>: " + d[vis.measure]; });
+    vis.policyTipAHOPE.html("AHOPE created");
+    vis.policyTipBILL4056.html("Bill H.4056 enacted");
+    vis.policyTipMARIJUANABALLOT.html("Recreational marijuana legalized via ballot measure");
 
     // Draw circles
-    vis.circles = vis.svg.selectAll("circle")
+    vis.trendCircles = vis.svg.selectAll("trend-circle")
         .data(vis.data);
-    vis.circles.exit().remove();
-    vis.circles.enter()
+    vis.trendCircles.exit().remove();
+    vis.trendCircles.enter()
         .append("circle")
-        .attr("class", "circle")
+        .attr("class", "trend-circle")
 		.attr("r", 4.5)
-.on("mouseover", vis.tip.show)
-        .on("mouseout", vis.tip.hide)
-        .merge(vis.circles)
+        .on("mouseover", vis.trendTip.show)
+        .on("mouseout", vis.trendTip.hide)
+        .merge(vis.trendCircles)
         .transition()
         .duration(3500)
         .attr("cx", function(d) { return vis.x(d.date); })
         .attr("cy", function(d) { return vis.y(d[vis.measure]); });
+
+    vis.policyCircleAHOPE = vis.svg
+        .append("circle")
+        .attr("class", "policy-circle")
+        .attr("cx", vis.x(vis.dateAHOPE))
+        .attr("cy", 0)
+        .attr("r", 4.5)
+        .on("mouseover", vis.policyTipAHOPE.show)
+        .on("mouseout", vis.policyTipAHOPE.hide)
+
+    vis.policyCircleBILL4056 = vis.svg
+        .append("circle")
+        .attr("class", "policy-circle")
+        .attr("cx", vis.x(vis.dateBILL4056))
+        .attr("cy", 0)
+        .attr("r", 4.5)
+        .on("mouseover", vis.policyTipBILL4056.show)
+        .on("mouseout", vis.policyTipBILL4056.hide)
+
+    vis.policyCircleMARIJUANABALLOT = vis.svg
+        .append("circle")
+        .attr("class", "policy-circle")
+        .attr("cx", vis.x(vis.dateMARIJUANABALLOT))
+        .attr("cy", 0)
+        .attr("r", 4.5)
+        .on("mouseover", vis.policyTipMARIJUANABALLOT.show)
+        .on("mouseout", vis.policyTipMARIJUANABALLOT.hide)
 };
 
