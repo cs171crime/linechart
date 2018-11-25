@@ -121,13 +121,13 @@ Linechart.prototype.updateVis = function() {
 
 	// Draw axes
 	vis.xAxisGroup.call(vis.xAxis);
-	vis.yAxisGroup.transition().duration(3000).call(vis.yAxis);
+	vis.yAxisGroup.transition().duration(1000).call(vis.yAxis);
 
     // Draw paths
     vis.trendPath.datum(vis.data)
         .attr("class", "trend-line")
 		.transition()
-		.duration(2000)
+		.duration(700)
         .attr("d", vis.line(vis.data));
 
     // Remove irrelevant policy lines and redraw appropriate ones
@@ -137,7 +137,7 @@ Linechart.prototype.updateVis = function() {
     vis.policyPathMARIJUANABALLOT = vis.svg.append("line");
 
 
-    if (vis.measure=="HeroinCrimes" || vis.measure=="NumbNeedleReports") {
+    if (vis.measure==="HeroinCrimes" || vis.measure==="NumbNeedleReports") {
         // AHOPE - Oct 2016
         vis.policyPathAHOPE
             .attr("class", "policy-line")
@@ -166,7 +166,7 @@ Linechart.prototype.updateVis = function() {
 
 
     // Update tooltips
-    if (vis.measure=="HeroinCrimes" || vis.measure=="WeedCrimes") {
+    if (vis.measure==="HeroinCrimes" || vis.measure==="WeedCrimes") {
         vis.trendTip.html(function(d) { return "<strong>" + formatDate(d.date) + "</strong>: " + d[vis.measure] + " reported incidents"; });
     }
     else {
@@ -174,7 +174,7 @@ Linechart.prototype.updateVis = function() {
     }
     vis.policyTipAHOPE.html("Access, Harm Reduction, Overdose Prevention<br>and Education (AHOPE) services began.");
     vis.policyTipBILL4056.html("Act Relative to Substance Use, Treatment,<br>Education and Prevention (Bill H.4056) enacted.");
-    vis.policyTipMARIJUANABALLOT.html("Recreational marijuana legalized via ballot measure");
+    vis.policyTipMARIJUANABALLOT.html("Recreational marijuana legalized via ballot measure.");
 
     // Draw circles
     vis.trendCircles = vis.svg.selectAll("circle")
@@ -188,11 +188,11 @@ Linechart.prototype.updateVis = function() {
         .on("mouseout", vis.trendTip.hide)
         .merge(vis.trendCircles)
         .transition()
-        .duration(3500)
+        .duration(1500)
         .attr("cx", function(d) { return vis.x(d.date); })
         .attr("cy", function(d) { return vis.y(d[vis.measure]); });
 
-    if (vis.measure=="HeroinCrimes" || vis.measure=="NumbNeedleReports") {
+    if (vis.measure==="HeroinCrimes" || vis.measure==="NumbNeedleReports") {
         vis.policyCircleAHOPE = vis.svg
             .append("circle")
             .attr("class", "policy-circle")
